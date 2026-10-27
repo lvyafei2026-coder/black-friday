@@ -1,0 +1,10 @@
+{
+  "name": "black-friday",
+  "private": true,
+  "description": "Black Friday Countdown — static site deployed as a Worker with assets.",
+  "scripts": {
+    "build": "echo \"Static site, no build step\"",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {}
+}
