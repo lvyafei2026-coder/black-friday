@@ -4,8 +4,8 @@
 
 ## URL
 - Home: https://blackfriday.toolara.dev/
-- Embeddable countdown widget (iframe, free): https://blackfriday.toolara.dev/embed.html
-- Privacy: https://blackfriday.toolara.dev/privacy.html
+- Embeddable countdown widget (iframe, free): https://blackfriday.toolara.dev/embed
+- Privacy: https://blackfriday.toolara.dev/privacy
 
 ## Key facts
 - Black Friday 2026: Friday, November 27, 2026 (the Friday after US Thanksgiving, the fourth Thursday of November)
