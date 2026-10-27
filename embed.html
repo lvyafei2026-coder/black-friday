@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Embed the Black Friday Countdown — Free Widget</title>
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="Add a free live Black Friday countdown to your site with one line of iframe code.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230b0b0d'/%3E%3Ctext x='12' y='17' font-size='13' font-weight='bold' text-anchor='middle' fill='%23f59e0b' font-family='Arial'%3EBF%3C/text%3E%3C/svg%3E">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #111114; color: #e7e7ec; min-height: 100vh; }
+
+  /* ── 组件模式（被 iframe 嵌入时） ── */
+  body.widget { background: transparent; display: flex; align-items: center; justify-content: center; }
+  .bf-widget { background: linear-gradient(160deg, #16161c, #0d0d11); border: 1px solid rgba(245,158,11,.25); border-radius: 14px; padding: 22px 26px; width: 100%; max-width: 620px; text-align: center; }
+  .bf-widget .w-badge { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .12em; color: #0b0b0d; background: #f59e0b; border-radius: 4px; padding: 3px 8px; }
+  .bf-widget .w-date { font-size: 18px; font-weight: 800; color: #fafafa; margin: 10px 0 2px; }
+  .bf-widget .w-sub { font-size: 11.5px; color: #8f8f9c; margin-bottom: 14px; }
+  .bf-widget .w-timer { display: flex; justify-content: center; gap: 10px; }
+  .bf-widget .w-u { background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.2); border-radius: 8px; padding: 8px 0; min-width: 64px; }
+  .bf-widget .w-n { font-size: 24px; font-weight: 800; color: #f59e0b; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .bf-widget .w-l { font-size: 9px; letter-spacing: .1em; color: #8f8f9c; text-transform: uppercase; margin-top: 2px; }
+  .bf-widget .w-credit { margin-top: 12px; font-size: 10.5px; color: #6d6d7a; }
+  .bf-widget .w-credit a { color: #b9b9c6; text-decoration: none; }
+  .bf-widget .w-credit a:hover { color: #f59e0b; }
+
+  /* ── 说明模式（直接打开时） ── */
+  .page { max-width: 720px; margin: 0 auto; padding: 40px 20px 60px; }
+  .page .logo { font-size: 14px; font-weight: 800; color: #e7e7ec; text-decoration: none; }
+  .page .logo .mark { display: inline-block; background: #f59e0b; color: #0b0b0d; border-radius: 5px; padding: 2px 7px; margin-right: 7px; }
+  .page h1 { font-size: 26px; margin: 26px 0 8px; letter-spacing: -.3px; }
+  .page .lede { color: #a0a0ae; font-size: 14.5px; line-height: 1.65; margin-bottom: 24px; }
+  .page h2 { font-size: 16px; margin: 28px 0 10px; color: #fafafa; }
+  .page ol { margin: 0 0 8px 20px; color: #b5b5c2; font-size: 13.5px; line-height: 1.8; }
+  .page code.box { display: block; background: #0a0a0d; border: 1px solid #2a2a33; border-radius: 8px; padding: 14px 16px; font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: 12px; color: #9ecbff; overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+  .copy-btn { margin-top: 10px; background: #f59e0b; color: #0b0b0d; border: 0; border-radius: 6px; padding: 8px 18px; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+  .copy-btn:hover { background: #fbbf24; }
+  .preview-frame { width: 100%; border: 1px dashed #3a3a44; border-radius: 12px; background: transparent; }
+  .page .notes { color: #7e7e8a; font-size: 12.5px; line-height: 1.8; margin-top: 18px; }
+  .page .notes a { color: #f59e0b; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- 组件模式：由 JS 在 iframe 内时填充 -->
+<div id="widgetRoot" style="display:none; width:100%;">
+  <div class="bf-widget">
+    <span class="w-badge">BLACK FRIDAY 2026</span>
+    <div class="w-date" id="wDate">Friday, November 27, 2026</div>
+    <div class="w-sub" id="wSub">Live countdown</div>
+    <div class="w-timer">
+      <div class="w-u"><div class="w-n" id="wD">--</div><div class="w-l">Days</div></div>
+      <div class="w-u"><div class="w-n" id="wH">--</div><div class="w-l">Hours</div></div>
+      <div class="w-u"><div class="w-n" id="wM">--</div><div class="w-l">Min</div></div>
+      <div class="w-u"><div class="w-n" id="wS">--</div><div class="w-l">Sec</div></div>
+    </div>
+    <div class="w-credit">Free widget from <a href="https://blackfriday.toolara.dev/" target="_blank" rel="noopener">blackfriday.toolara.dev</a></div>
+  </div>
+</div>
+
+<!-- 说明模式：顶层打开时显示 -->
+<div class="page" id="pageRoot">
+  <a class="logo" href="/"><span class="mark">BF</span>Black Friday Countdown</a>
+  <h1>Embed the Countdown on Your Site</h1>
+  <p class="lede">A live, auto-updating Black Friday countdown — free for any website, blog or store. One line of code, no signup, no tracking.</p>
+
+  <h2>1. Copy this code</h2>
+  <code class="box" id="embedCode">&lt;iframe src="https://blackfriday.toolara.dev/embed.html" width="640" height="230" style="border:0;max-width:100%;" loading="lazy" title="Black Friday Countdown"&gt;&lt;/iframe&gt;</code>
+  <button class="copy-btn" id="copyBtn">Copy code</button>
+
+  <h2>2. Live preview</h2>
+  <iframe class="preview-frame" src="/embed.html" width="640" height="230" style="border:0;max-width:100%;" loading="lazy" title="Widget preview"></iframe>
+
+  <div class="notes">
+    <p>· The widget follows the US rule (Friday after the 4th Thursday of November) and <strong>auto-rolls to next year</strong> after the Black Friday weekend — set it once, never touch it again.</p>
+    <p>· Width is adjustable; keep it at least 480px for the four-unit layout, it stacks gracefully below that.</p>
+    <p>· Back at the <a href="/">full countdown page</a>.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var DAY = 86400000, WIN = 4;
+  function bfOf(y) { var n = new Date(y, 10, 1); return new Date(y, 10, 1 + ((4 - n.getDay() + 7) % 7) + 22); }
+  var now = new Date(), y = now.getFullYear(), bf = bfOf(y);
+  if (now.getTime() >= bf.getTime() + WIN * DAY) { y += 1; bf = bfOf(y); }
+  var live = now.getTime() >= bf.getTime();
+  var fmtLong = function (d) { return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }); };
+  var pad = function (n) { return n < 10 ? '0' + n : String(n); };
+
+  var framed = window.self !== window.top;
+  document.body.classList.toggle('widget', framed);
+  var widgetRoot = document.getElementById('widgetRoot');
+  var pageRoot = document.getElementById('pageRoot');
+  if (framed) { widgetRoot.style.display = 'block'; pageRoot.style.display = 'none'; }
+  else { widgetRoot.style.display = 'none'; pageRoot.style.display = 'block'; }
+
+  document.getElementById('wDate').textContent = fmtLong(bf);
+
+  var d = document.getElementById('wD'), h = document.getElementById('wH'),
+      m = document.getElementById('wM'), s = document.getElementById('wS'),
+      sub = document.getElementById('wSub');
+
+  function tick() {
+    var t = Date.now();
+    if (t >= bf.getTime() && t < bf.getTime() + WIN * DAY) {
+      [d, h, m, s].forEach(function (n) { n.textContent = '0'; });
+      sub.textContent = 'Deals are LIVE';
+    } else {
+      if (t >= bf.getTime()) { y += 1; bf = bfOf(y); document.getElementById('wDate').textContent = fmtLong(bf); }
+      var diff = bf.getTime() - t;
+      d.textContent = Math.floor(diff / DAY);
+      h.textContent = pad(Math.floor(diff % DAY / 3600000));
+      m.textContent = pad(Math.floor(diff % 3600000 / 60000));
+      s.textContent = pad(Math.floor(diff % 60000 / 1000));
+      sub.textContent = 'Live countdown';
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  var cb = document.getElementById('copyBtn');
+  if (cb) cb.addEventListener('click', function () {
+    var code = document.getElementById('embedCode').textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(code).then(function () { cb.textContent = 'Copied!'; setTimeout(function () { cb.textContent = 'Copy code'; }, 1600); });
+  });
+})();
+</script>
+</body>
+</html>

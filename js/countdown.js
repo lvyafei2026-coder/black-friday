@@ -48,6 +48,12 @@
 
   var el = function (id) { return document.getElementById(id); };
 
+  // ── 时效信号 + 目标年同步的静态文案 ──
+  var lastUpdated = el('lastUpdated');
+  if (lastUpdated) lastUpdated.textContent = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  var duDays = el('duDays'); // "How many days until" 长尾段
+
   // ── H1 日期行 + 精选摘要答案框（跟随目标年份） ──
   var dateLine = el('bfDateLine');
   if (dateLine) dateLine.textContent = fmtLong(bf);
@@ -85,6 +91,7 @@
     if (answer) answer.innerHTML = 'Deals are <strong>live right now</strong> — most sales run through the weekend into Cyber Monday.';
     if (status) status.textContent = '🔥 BF deals LIVE';
     if (banner) banner.classList.add('show');
+    if (duDays) duDays.textContent = '0';
   }
 
   function renderCountdown() {
@@ -103,6 +110,7 @@
     }
     if (status) status.textContent = '⏳ ' + days + ' days to go';
     if (banner) banner.classList.remove('show');
+    if (duDays) duDays.textContent = days;
   }
 
   function tick() {

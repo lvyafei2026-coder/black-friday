@@ -10,6 +10,9 @@ Live countdown to Black Friday — plus exact dates for every future year, deal 
 - Future dates table 2026–2030 (Thanksgiving / Black Friday / Cyber Monday), current year highlighted by JS
 - Featured-snippet answer box synced to the target year (for Google / AI citations)
 - FAQ section with JSON-LD (FAQPage) + WebApplication structured data
+- Long-tail sections: "How Many Days Until Black Friday?" (live) + "When Is Cyber Monday 2026?"
+- Free embeddable countdown widget (`/embed.html`, iframe one-liner) — natural backlink source
+- llms.txt for AI crawler discovery
 - Dark theme (black + amber) — differentiated from the rest of the fleet
 
 ## Structure
@@ -17,8 +20,10 @@ Live countdown to Black Friday — plus exact dates for every future year, deal 
 ```
 index.html        # single-page site (en)
 css/style.css     # site styles (dark) + shared toolara.dev fleet footer
-js/countdown.js   # countdown / year roll / table highlight / FAQ
+js/countdown.js   # countdown / year roll / table highlight / FAQ / days-answer
+embed.html        # embeddable widget + usage page (noindex; self-detects iframe mode)
 privacy.html      # privacy policy (AdSense-ready)
+llms.txt          # AI crawler guide
 sitemap.xml
 ```
 

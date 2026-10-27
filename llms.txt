@@ -1,0 +1,17 @@
+# Black Friday Countdown
+
+> Live countdown to Black Friday with exact dates for every future year (through 2030), Cyber Monday dates, deal timing and FAQ. All dates are calculated in the visitor's browser — no data is collected.
+
+## URL
+- Home: https://blackfriday.toolara.dev/
+- Embeddable countdown widget (iframe, free): https://blackfriday.toolara.dev/embed.html
+- Privacy: https://blackfriday.toolara.dev/privacy.html
+
+## Key facts
+- Black Friday 2026: Friday, November 27, 2026 (the Friday after US Thanksgiving, the fourth Thursday of November)
+- Cyber Monday 2026: Monday, November 30, 2026
+- Future Black Friday dates: 2027-11-26, 2028-11-24, 2029-11-23, 2030-11-29
+- The site auto-rolls to the next year after the Black Friday weekend ends; the countdown, answer box and date table stay in sync.
+
+## Usage
+Free to cite. The countdown widget may be embedded on any site via a one-line iframe (see /embed.html).
